@@ -7,18 +7,29 @@ import { NextResponse, type NextRequest } from "next/server";
  * keeps using the IP/host, while the server fetches from UPSTREAM_BASE_URL.
  */
 export function middleware(req: NextRequest) {
-  if (process.env.PROXY_MODE !== "1") return NextResponse.next();
+  const enabled = process.env.PROXY_MODE === "1" || process.env.PROXY_MODE === "true";
+  if (!enabled) {
+    const res = NextResponse.next();
+    res.headers.set("x-proxy-middleware", "off");
+    return res;
+  }
 
   const { pathname, search } = req.nextUrl;
 
   // Prevent loop: do not rewrite the proxy endpoint itself.
-  if (pathname.startsWith("/api/proxy")) return NextResponse.next();
+  if (pathname.startsWith("/api/proxy")) {
+    const res = NextResponse.next();
+    res.headers.set("x-proxy-middleware", "bypass");
+    return res;
+  }
 
   const rewriteUrl = req.nextUrl.clone();
   rewriteUrl.pathname = `/api/proxy${pathname}`;
   rewriteUrl.search = search;
 
-  return NextResponse.rewrite(rewriteUrl);
+  const res = NextResponse.rewrite(rewriteUrl);
+  res.headers.set("x-proxy-middleware", "rewrite");
+  return res;
 }
 
 export const config = {

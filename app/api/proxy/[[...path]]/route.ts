@@ -131,6 +131,9 @@ async function proxy(req: NextRequest, ctx: { params: Promise<{ path?: string[] 
   });
 
   const resHeaders = new Headers();
+  // Debug helpers (safe to remove later)
+  resHeaders.set("x-proxy-upstream", upstreamUrl.toString());
+  resHeaders.set("x-proxy-status", String(upstreamRes.status));
   for (const [k, v] of upstreamRes.headers.entries()) {
     const key = k.toLowerCase();
     if (HOP_BY_HOP_RESPONSE_HEADERS.has(key)) continue;
