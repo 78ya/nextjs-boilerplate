@@ -5,7 +5,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 // Backwards-compatible proxy endpoint (internal use / debugging only).
-// Proxies /api/proxy/<path> to UPSTREAM_BASE_URL/<path>.
+// Proxies /api/proxy/<path> to http://182.92.3.138/<path>.
 export async function GET(req: NextRequest) {
   return proxyRequest(req, { stripPrefix: "/api/proxy" });
 }

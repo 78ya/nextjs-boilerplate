@@ -37,14 +37,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## URL 对等转发（透明反向代理 / IP 访问）
 
-本项目内置一个“**透明反向代理**”模式：浏览器访问 `http://你的IP/任意路径?query` 时，服务端会转发到你指定的上游 `UPSTREAM_BASE_URL/任意路径?query`，并尽量做到 **路径/查询/方法/请求体/响应头/状态码 对等**。
+本项目内置一个“**透明反向代理**”模式：浏览器访问 `http://你的IP/任意路径?query` 时，服务端会转发到写死的上游 `http://182.92.3.138/任意路径?query`，并尽量做到 **路径/查询/方法/请求体/响应头/状态码 对等**。
 
 ### 启用方法
 
 1) 参考 `env.example` 配置环境变量（部署时建议用环境变量；本地可写到 `.env.local`）。
 
 - **PROXY_MODE**: 设为 `1` 启用透明转发
-- **UPSTREAM_BASE_URL**: 上游站点（必须带 `http://` 或 `https://`，不要带额外 path）
 - **PROXY_REWRITE_COOKIE_DOMAIN（可选）**: 设为 `1` 时，会把上游 `Set-Cookie` 里 `Domain=<上游域名>` 尝试改成 host-only，便于通过 IP 访问时 cookie 不丢（best-effort）
 
 2) 启动：

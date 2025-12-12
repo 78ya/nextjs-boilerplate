@@ -28,13 +28,8 @@ const HOP_BY_HOP_RESPONSE_HEADERS = new Set([
 ]);
 
 function getUpstreamBaseUrl(): URL {
-  const raw = process.env.UPSTREAM_BASE_URL;
-  if (!raw) {
-    throw new Error(
-      "Missing env UPSTREAM_BASE_URL, e.g. https://example.com (no trailing path).",
-    );
-  }
-  return new URL(raw);
+  // Hardcoded upstream (per requirement)
+  return new URL("http://182.92.3.138/");
 }
 
 function joinPathname(basePathname: string, appendPathname: string) {
