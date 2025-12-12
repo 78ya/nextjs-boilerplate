@@ -57,8 +57,9 @@ npm run dev
 
 ### 关键实现文件
 
-- `middleware.ts`: 开关 `PROXY_MODE=1` 时，把所有请求重写到 `/api/proxy/*`
-- `app/api/proxy/[[...path]]/route.ts`: 真正执行上游 `fetch` 并把响应透传回来（含 `Location` 改写）
+- `app/route.ts` + `app/[[...path]]/route.ts`: **从根目录 `/` 开始接管所有请求并反代**
+- `app/_proxy/transparentProxy.ts`: 真正执行上游 `fetch` 并把响应透传回来（含 `Location` 改写）
+- `app/api/proxy/[[...path]]/route.ts`: 兼容/调试用入口（会 strip 掉 `/api/proxy` 再转发）
 
 ### 使用 IP 的注意点（你可能需要确认）
 
