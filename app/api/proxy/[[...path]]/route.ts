@@ -1,7 +1,8 @@
 import type { NextRequest } from "next/server";
-import { proxyRequest, runtime, dynamic } from "../../../_proxy/transparentProxy";
+import { proxyRequest } from "../../../_proxy/transparentProxy";
 
-export { runtime, dynamic };
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 // Backwards-compatible proxy endpoint (internal use / debugging only).
 // Proxies /api/proxy/<path> to UPSTREAM_BASE_URL/<path>.

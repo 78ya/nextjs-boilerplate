@@ -1,7 +1,8 @@
 import type { NextRequest } from "next/server";
 import { proxyRequest } from "./_proxy/transparentProxy";
 
-export { runtime, dynamic } from "./_proxy/transparentProxy";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   return proxyRequest(req);
